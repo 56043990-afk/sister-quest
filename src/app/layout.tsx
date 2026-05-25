@@ -31,13 +31,10 @@ export default function RootLayout({
 }
 export const metadata = {
   title: 'SisterQuest',
+  description: '我的专属任务网站',
   icons: {
     icon: '/app-icon.png',
     shortcut: '/app-icon.png',
-    apple: {
-      url: '/app-icon.png',
-      sizes: '180x180',
-      type: 'image/png',
-    },
+    apple: '/app-icon.png',
   },
 };
