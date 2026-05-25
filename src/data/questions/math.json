@@ -1,0 +1,66 @@
+{
+  "math": {
+    "beginner": [
+      {
+        "id": "math-1",
+        "question": "What is 7 + 8?",
+        "options": ["13", "14", "15", "16"],
+        "correct": 2,
+        "difficulty": "easy"
+      },
+      {
+        "id": "math-2",
+        "question": "What is 15 - 6?",
+        "options": ["7", "8", "9", "10"],
+        "correct": 2,
+        "difficulty": "easy"
+      },
+      {
+        "id": "math-3",
+        "question": "What is 4 × 3?",
+        "options": ["10", "11", "12", "13"],
+        "correct": 2,
+        "difficulty": "easy"
+      },
+      {
+        "id": "math-4",
+        "question": "What is 20 ÷ 4?",
+        "options": ["4", "5", "6", "7"],
+        "correct": 1,
+        "difficulty": "easy"
+      }
+    ],
+    "intermediate": [
+      {
+        "id": "math-5",
+        "question": "What is 12 × 12?",
+        "options": ["124", "144", "134", "154"],
+        "correct": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "math-6",
+        "question": "What is the square root of 81?",
+        "options": ["7", "8", "9", "10"],
+        "correct": 2,
+        "difficulty": "medium"
+      }
+    ],
+    "advanced": [
+      {
+        "id": "math-7",
+        "question": "Solve for x: 2x + 6 = 14",
+        "options": ["x = 3", "x = 4", "x = 5", "x = 6"],
+        "correct": 1,
+        "difficulty": "hard"
+      },
+      {
+        "id": "math-8",
+        "question": "What is π rounded to 2 decimal places?",
+        "options": ["3.12", "3.14", "3.16", "3.18"],
+        "correct": 1,
+        "difficulty": "hard"
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "science": {
+    "beginner": [
+      {
+        "id": "sci-1",
+        "question": "What do plants need to grow?",
+        "options": ["Chocolate", "Sunlight and water", "Sand only", "Music"],
+        "correct": 1,
+        "difficulty": "easy"
+      },
+      {
+        "id": "sci-2",
+        "question": "How many legs does a spider have?",
+        "options": ["6", "8", "10", "4"],
+        "correct": 1,
+        "difficulty": "easy"
+      }
+    ],
+    "intermediate": [
+      {
+        "id": "sci-3",
+        "question": "What is the process by which plants make food?",
+        "options": ["Respiration", "Photosynthesis", "Digestion", "Evaporation"],
+        "correct": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "sci-4",
+        "question": "What are the three states of matter?",
+        "options": [
+          "Hot, Cold, Warm",
+          "Solid, Liquid, Gas",
+          "Big, Medium, Small",
+          "Red, Blue, Green"
+        ],
+        "correct": 1,
+        "difficulty": "medium"
+      }
+    ],
+    "advanced": [
+      {
+        "id": "sci-5",
+        "question": "What is the powerhouse of the cell?",
+        "options": ["Nucleus", "Ribosome", "Mitochondria", "Cell membrane"],
+        "correct": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "sci-6",
+        "question": "What is the chemical formula for water?",
+        "options": ["CO2", "H2O", "NaCl", "O2"],
+        "correct": 1,
+        "difficulty": "hard"
+      }
+    ]
+  }
+}

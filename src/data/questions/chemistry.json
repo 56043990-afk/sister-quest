@@ -1,0 +1,52 @@
+{
+  "chemistry": {
+    "beginner": [
+      {
+        "id": "chem-1",
+        "question": "What is H2O commonly known as?",
+        "options": ["Salt", "Water", "Sugar", "Air"],
+        "correct": 1,
+        "difficulty": "easy"
+      },
+      {
+        "id": "chem-2",
+        "question": "What are the three primary colors?",
+        "options": ["Red, Blue, Yellow", "Green, Orange, Purple", "Pink, Brown, Black", "White, Gray, Black"],
+        "correct": 0,
+        "difficulty": "easy"
+      }
+    ],
+    "intermediate": [
+      {
+        "id": "chem-3",
+        "question": "What is the atomic number of Carbon?",
+        "options": ["4", "6", "8", "12"],
+        "correct": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "chem-4",
+        "question": "What type of bond involves sharing electrons?",
+        "options": ["Ionic bond", "Covalent bond", "Hydrogen bond", "Metallic bond"],
+        "correct": 1,
+        "difficulty": "medium"
+      }
+    ],
+    "advanced": [
+      {
+        "id": "chem-5",
+        "question": "What is the pH of a strong acid?",
+        "options": ["7", "10", "2", "14"],
+        "correct": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "chem-6",
+        "question": "What is Avogadro's number approximately?",
+        "options": ["6.02 × 10²³", "3.14 × 10⁸", "9.8 × 10⁶", "1.6 × 10⁻¹⁹"],
+        "correct": 0,
+        "difficulty": "hard"
+      }
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "english": {
+    "beginner": [
+      {
+        "id": "eng-1",
+        "question": "Which word is a noun?",
+        "options": ["Run", "Happy", "Dog", "Quickly"],
+        "correct": 2,
+        "difficulty": "easy"
+      },
+      {
+        "id": "eng-2",
+        "question": "What is the opposite of 'hot'?",
+        "options": ["Warm", "Cold", "Cool", "Wet"],
+        "correct": 1,
+        "difficulty": "easy"
+      }
+    ],
+    "intermediate": [
+      {
+        "id": "eng-3",
+        "question": "Which sentence uses correct punctuation?",
+        "options": [
+          "The cat sat on the mat.",
+          "The cat sat on the mat",
+          "the cat sat on the mat.",
+          "The cat sat on the mat!"
+        ],
+        "correct": 0,
+        "difficulty": "medium"
+      },
+      {
+        "id": "eng-4",
+        "question": "What is a synonym for 'happy'?",
+        "options": ["Sad", "Joyful", "Angry", "Tired"],
+        "correct": 1,
+        "difficulty": "medium"
+      }
+    ],
+    "advanced": [
+      {
+        "id": "eng-5",
+        "question": "Identify the preposition: 'The book is on the table.'",
+        "options": ["book", "is", "on", "table"],
+        "correct": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "eng-6",
+        "question": "Which sentence contains a metaphor?",
+        "options": [
+          "The stars were bright.",
+          "Her eyes were diamonds.",
+          "The wind howled.",
+          "Time flies."
+        ],
+        "correct": 1,
+        "difficulty": "hard"
+      }
+    ]
+  }
+}

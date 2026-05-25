@@ -1,0 +1,52 @@
+{
+  "physics": {
+    "beginner": [
+      {
+        "id": "phy-1",
+        "question": "What force pulls objects toward the Earth?",
+        "options": ["Magnetism", "Gravity", "Friction", "Wind"],
+        "correct": 1,
+        "difficulty": "easy"
+      },
+      {
+        "id": "phy-2",
+        "question": "What do you call something that lets light through?",
+        "options": ["Opaque", "Transparent", "Solid", "Heavy"],
+        "correct": 1,
+        "difficulty": "easy"
+      }
+    ],
+    "intermediate": [
+      {
+        "id": "phy-3",
+        "question": "What is the speed of light approximately?",
+        "options": ["300 km/s", "300,000 km/s", "3,000 km/s", "30,000 km/s"],
+        "correct": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "phy-4",
+        "question": "What type of energy does a moving car have?",
+        "options": ["Potential energy", "Kinetic energy", "Chemical energy", "Nuclear energy"],
+        "correct": 1,
+        "difficulty": "medium"
+      }
+    ],
+    "advanced": [
+      {
+        "id": "phy-5",
+        "question": "What is Einstein's famous equation?",
+        "options": ["E = mc³", "E = mc²", "E = m/c²", "E = c²m"],
+        "correct": 1,
+        "difficulty": "hard"
+      },
+      {
+        "id": "phy-6",
+        "question": "What is the unit of electrical resistance?",
+        "options": ["Volt", "Ampere", "Ohm", "Watt"],
+        "correct": 2,
+        "difficulty": "hard"
+      }
+    ]
+  }
+}
