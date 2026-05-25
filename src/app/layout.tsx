@@ -29,3 +29,15 @@ export default function RootLayout({
     </html>
   );
 }
+export const metadata = {
+  title: 'SisterQuest',
+  icons: {
+    icon: '/app-icon.png',
+    shortcut: '/app-icon.png',
+    apple: {
+      url: '/app-icon.png',
+      sizes: '180x180',
+      type: 'image/png',
+    },
+  },
+};
