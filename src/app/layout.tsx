@@ -31,7 +31,6 @@ export default function RootLayout({
 }
 export const metadata = {
   title: 'SisterQuest',
-  description: '我的专属任务网站',
   icons: {
     icon: '/app-icon.png',
     shortcut: '/app-icon.png',
