@@ -40,4 +40,17 @@ export const metadata = {
   },
   // 增加这一行，告诉浏览器忽略任何旧的清单文件
   manifest: '/manifest.json', // 如果你没有这个文件，就删掉这行，或者确保没有旧的 manifest 指向旧图标
-};
+};// src/app/layout.tsx
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="zh">
+      <head>
+        {/* 强制在这里指定图标路径，这是最底层的 HTML 语法 */}
+        <link rel="shortcut icon" href="/brand-icon-2026.png" />
+        <link rel="apple-touch-icon" href="/brand-icon-2026.png" />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
