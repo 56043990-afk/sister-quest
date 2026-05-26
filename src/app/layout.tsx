@@ -60,3 +60,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   <link rel="shortcut icon" href="https://i.imgur.com/vHqJv7P.png" />
   <link rel="apple-touch-icon" href="https://i.imgur.com/vHqJv7P.png" />
 </head>
+// src/app/layout.tsx
+
+export const metadata = {
+  title: 'SisterQuest',
+  description: '我的专属任务网站',
+  // 确保这里没有 icons 字段，如果有，直接删掉！
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="zh">
+      <head>
+        {/* 强制覆盖所有默认图标 */}
+        <link rel="shortcut icon" href="https://i.imgur.com/vHqJv7P.png" />
+        <link rel="apple-touch-icon" href="https://i.imgur.com/vHqJv7P.png" />
+        <link rel="icon" href="https://i.imgur.com/vHqJv7P.png" />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
