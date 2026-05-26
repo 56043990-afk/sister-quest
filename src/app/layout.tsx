@@ -33,7 +33,8 @@ export const metadata = {
   title: 'SisterQuest',
   description: '我的专属任务网站',
   icons: {
-  icon: '/new-unique-icon-2026.png',
-  shortcut: '/new-unique-icon-2026.png',
-  apple: '/new-unique-icon-2026.png',
-},
+    icon: '/new-logo-2026.png',
+    shortcut: '/new-logo-2026.png',
+    apple: '/new-logo-2026.png',
+  },
+};
