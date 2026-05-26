@@ -11,6 +11,11 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "SisterQuest - Daily Learning Adventure",
   description: "Personalized daily learning for Pink and Rosie",
+  // 在这里定义图标，Next.js 会自动把它注入到 <head> 中
+  icons: {
+    icon: "https://i.imgur.com/vHqJv7P.png",
+    apple: "https://i.imgur.com/vHqJv7P.png",
+  },
 };
 
 export default function RootLayout({
@@ -20,64 +25,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* 这里不需要手动写 <link>，Metadata 会自动生成它 */}
+      </head>
       <body className={`${nunito.variable} font-sans antialiased`}>
         <div className="min-h-screen flex flex-col">
           <NavBarWrapper />
           <main className="flex-1">{children}</main>
         </div>
       </body>
-    </html>
-  );
-}
-export const metadata = {
-  title: 'SisterQuest',
-  description: '我的专属任务网站',
-  icons: {
-    // 强制把所有图标入口都指向这个新的名字
-    icon: '/brand-icon-2026.png',
-    shortcut: '/brand-icon-2026.png',
-    apple: '/brand-icon-2026.png',
-  },
-  // 增加这一行，告诉浏览器忽略任何旧的清单文件
-  manifest: '/manifest.json', // 如果你没有这个文件，就删掉这行，或者确保没有旧的 manifest 指向旧图标
-};// src/app/layout.tsx
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="zh">
-      <head>
-        {/* 强制在这里指定图标路径，这是最底层的 HTML 语法 */}
-        <link rel="shortcut icon" href="/brand-icon-2026.png" />
-        <link rel="apple-touch-icon" href="/brand-icon-2026.png" />
-      </head>
-      <body>{children}</body>
-    </html>
-  );
-}<link rel="shortcut icon" href="/brand-icon-2026.png" />
-<link rel="shortcut icon" href="/brand-icon-2026.png" />
-<link rel="shortcut icon" href="/static-assets/brand-icon-2026.png" />
-<head>
-  <link rel="shortcut icon" href="https://i.imgur.com/vHqJv7P.png" />
-  <link rel="apple-touch-icon" href="https://i.imgur.com/vHqJv7P.png" />
-</head>
-// src/app/layout.tsx
-
-export const metadata = {
-  title: 'SisterQuest',
-  description: '我的专属任务网站',
-  // 确保这里没有 icons 字段，如果有，直接删掉！
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="zh">
-      <head>
-        {/* 强制覆盖所有默认图标 */}
-        <link rel="shortcut icon" href="https://i.imgur.com/vHqJv7P.png" />
-        <link rel="apple-touch-icon" href="https://i.imgur.com/vHqJv7P.png" />
-        <link rel="icon" href="https://i.imgur.com/vHqJv7P.png" />
-      </head>
-      <body>{children}</body>
     </html>
   );
 }
