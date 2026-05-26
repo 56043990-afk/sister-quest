@@ -55,3 +55,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }<link rel="shortcut icon" href="/brand-icon-2026.png" />
 <link rel="shortcut icon" href="/brand-icon-2026.png" />
+<link rel="shortcut icon" href="/static-assets/brand-icon-2026.png" />
+<head>
+  <link rel="shortcut icon" href="https://i.imgur.com/vHqJv7P.png" />
+  <link rel="apple-touch-icon" href="https://i.imgur.com/vHqJv7P.png" />
+</head>
