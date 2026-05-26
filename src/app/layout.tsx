@@ -53,4 +53,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>{children}</body>
     </html>
   );
-}
+}<link rel="shortcut icon" href="/brand-icon-2026.png" />
+<link rel="shortcut icon" href="/brand-icon-2026.png" />
