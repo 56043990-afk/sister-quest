@@ -109,9 +109,20 @@ export function NavBar() {
         <div className="flex items-center justify-between gap-2">
           {/* Left */}
           <div className="flex items-center gap-3">
-            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              SisterQuest
+            
+            {/* ====== 修改的部分在这里：加入 Logo 并完美居中对齐 ====== */}
+            <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+              <img 
+                src="/logo.png" 
+                alt="SisterQuest Logo" 
+                className="w-9 h-9 rounded-full object-cover shadow-sm border border-gray-100"
+              />
+              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                SisterQuest
+              </span>
             </Link>
+            {/* ========================================================= */}
+
             <Link
               href="/admin"
               className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 rounded-full hover:from-cyan-500/30 hover:to-purple-500/30 transition-all duration-200"
