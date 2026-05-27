@@ -221,4 +221,117 @@ export default function Home() {
         @keyframes float {
           0%, 100% { transform: translate(0, 0) scale(1); }
           25% { transform: translate(30px, -30px) scale(1.05); }
-          5
+          50% { transform: translate(-20px, 20px) scale(0.95); }
+          75% { transform: translate(-30px, -20px) scale(1.02); }
+        }
+      `}</style>
+
+      <FloatingOrb
+        className="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 -top-64 -left-64"
+        delay={0}
+        size="xl"
+      />
+      <FloatingOrb
+        className="bg-gradient-to-br from-teal-300 via-cyan-300 to-emerald-300 top-1/3 -right-64"
+        delay={-5}
+        size="lg"
+      />
+      <FloatingOrb
+        className="bg-gradient-to-br from-violet-300 via-indigo-300 to-purple-300 -bottom-64 left-1/4"
+        delay={-10}
+        size="md"
+      />
+      <FloatingOrb
+        className="bg-gradient-to-br from-pink-300 via-rose-300 to-orange-300 bottom-0 right-1/4"
+        delay={-15}
+        size="sm"
+      />
+
+      <div className="relative z-10 min-h-screen flex flex-col">
+        <header className="pt-8 pb-8 px-8">
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-gray-200/50 shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-sm font-medium text-gray-600">
+                Daily Quests Available
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 px-8 pb-16">
+          <div className="max-w-5xl mx-auto">
+            <section className="mb-10">
+              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider text-center mb-6">
+                Select Your Profile
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                {USERS.map((user, index) => (
+                  <div
+                    key={user.id}
+                    className="animate-fade-in"
+                    style={{
+                      animationDelay: `${index * 200}ms`,
+                      animationFillMode: "backwards",
+                    }}
+                  >
+                    <ProfileCard user={user} index={index} />
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-10 text-center">
+              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-5">
+                Quick Start
+              </h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {[
+                  { emoji: "🔢", label: "Math" },
+                  { emoji: "📚", label: "English" },
+                  { emoji: "🔬", label: "Science" },
+                  { emoji: "🧠", label: "Logic" },
+                  { emoji: "⚡", label: "Physics" },
+                  { emoji: "🧪", label: "Chemistry" },
+                ].map((subject) => (
+                  <Link
+                    key={subject.label}
+                    href={`/quiz/${subject.label.toLowerCase()}`}
+                    className="
+                      flex items-center gap-2
+                      px-5 py-3
+                      bg-white/50 backdrop-blur-sm
+                      rounded-xl border border-gray-200/50
+                      text-sm font-medium text-gray-600
+                      hover:bg-white/80 hover:border-gray-300
+                      transition-all duration-200
+                      hover:-translate-y-0.5
+                    "
+                  >
+                    <span>{subject.emoji}</span>
+                    <span>{subject.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <footer className="py-8 px-8 border-t border-gray-200/50 bg-white/30 backdrop-blur-sm">
+          <div className="max-w-5xl mx-auto flex items-center justify-between">
+            <p className="text-sm text-gray-400">
+              SisterQuest Learning Platform
+            </p>
+            <p className="text-sm text-gray-400">
+              Built for curious minds in Ireland 🇮🇪
+            </p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+}
