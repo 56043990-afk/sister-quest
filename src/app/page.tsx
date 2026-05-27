@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export const metadata = {
   title: 'SisterQuest',
   description: 'sister quest',
@@ -35,4 +33,8 @@ export default function Home() {
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        {
+        {/* Footer content if any */}
+      </footer>
+    </div>
+  );
+}
