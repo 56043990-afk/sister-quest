@@ -11,10 +11,10 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "SisterQuest - Daily Learning Adventure",
   description: "Personalized daily learning for Pink and Rosie",
-  // 在这里定义图标，Next.js 会自动把它注入到 <head> 中
+  // 彻底斩断网络旧链接，强制指向你存放在 public/ 文件夹下的本地新 logo.png
   icons: {
-    icon: "https://i.imgur.com/vHqJv7P.png",
-    apple: "https://i.imgur.com/vHqJv7P.png",
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
 };
 
