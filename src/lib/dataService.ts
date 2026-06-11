@@ -20,7 +20,8 @@ import {
 import { db } from "./firebase";
 import { Question } from "@/types/quiz";
 // ====== 核心修改：强制引入咱们刚刚大换血的高质量本地真题库 ======
-import { questions as localQuestions } from "@/src/data/questions";
+// ✅ 正确的新代码
+import { questions as localQuestions } from "@/data/questions";
 
 export interface UserProgress {
   userId: string;
