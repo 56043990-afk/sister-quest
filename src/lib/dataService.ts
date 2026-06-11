@@ -19,6 +19,8 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { Question } from "@/types/quiz";
+// ====== 核心修改：强制引入咱们刚刚大换血的高质量本地真题库 ======
+import { questions as localQuestions } from "@/src/data/questions";
 
 export interface UserProgress {
   userId: string;
@@ -44,26 +46,24 @@ export interface ErrorBookEntry {
   lastReviewedAt: string | null;
 }
 
+/**
+ * 终极手术：斩断云端旧数据链条，强行使用定制的本地真题库，并支持完美的学科与级别过滤
+ */
 export async function fetchQuestions(
   level?: "A" | "B",
   subject?: string
 ): Promise<Question[]> {
-  const constraints: QueryConstraint[] = [];
+  // 直接从本地真题库里筛选数据，秒杀 Firebase 僵尸缓存！
+  let filtered = [...localQuestions];
 
   if (level) {
-    constraints.push(where("level", "==", level));
+    filtered = filtered.filter((q) => q.level === level);
   }
   if (subject) {
-    constraints.push(where("subject", "==", subject));
+    filtered = filtered.filter((q) => q.subject.toLowerCase() === subject.toLowerCase());
   }
 
-  const finalQuery =
-    constraints.length > 0
-      ? query(collection(db, "questions"), ...constraints)
-      : query(collection(db, "questions"));
-
-  const snapshot = await getDocs(finalQuery);
-  return snapshot.docs.map((d) => d.data() as Question);
+  return filtered;
 }
 
 export async function getUserProgressDoc(userId: string): Promise<UserProgress | null> {
@@ -84,7 +84,7 @@ export async function initializeUser(userId: string): Promise<void> {
       dailyQuestionsAnswered: 0,
       streak: 0,
       lastActiveDate: new Date().toISOString().split("T")[0],
-      smartScores: { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50 },
+      smartScores: { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50, history: 50 },
       errorBook: [],
     });
   }
@@ -114,7 +114,7 @@ export async function initializeUserWithData(userId: string, data: {
       dailyQuestionsAnswered: 0,
       streak: data.streak || 0,
       lastActiveDate: new Date().toISOString().split("T")[0],
-      smartScores: { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50 },
+      smartScores: { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50, history: 50 },
       errorBook: [],
     });
   }
@@ -148,10 +148,11 @@ export async function getAllSmartScores(userId: string): Promise<Record<string, 
 
   if (docSnap.exists()) {
     const data = docSnap.data();
-    return data.smartScores || { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50 };
+    return data.smartScores || { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50, history: 50 };
   }
-  return { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50 };
+  return { math: 50, english: 50, science: 50, logic: 50, physics: 50, chemistry: 50, history: 50 };
 }
+
 export async function addToErrorBook(
   userId: string,
   question: Question
@@ -230,7 +231,6 @@ export async function fetchErrorBookBySubject(userId: string, subject: string): 
   if (docSnap.exists()) {
     const data = docSnap.data();
     const allEntries = (data.errorBook as ErrorBookEntry[]) || [];
-    // Strict filter: only entries for the exact subject
     return allEntries.filter((entry) => entry.question.subject === subject);
   }
   return [];
@@ -245,6 +245,7 @@ export async function getErrorBookCountBySubject(userId: string): Promise<Record
   });
   return counts;
 }
+
 export function getCurrentUser(): string {
   if (typeof window === "undefined") return "pink";
   try {
