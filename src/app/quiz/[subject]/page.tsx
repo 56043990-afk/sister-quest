@@ -34,6 +34,7 @@ const subjectEmojis: Record<string, string> = {
   physics: "⚡",
   chemistry: "🧪",
   logic: "🧠",
+  history: "🏛️", // 完美补齐历史学科
 };
 
 const subjectNames: Record<string, string> = {
@@ -43,6 +44,7 @@ const subjectNames: Record<string, string> = {
   physics: "Physics",
   chemistry: "Chemistry",
   logic: "Computational Logic",
+  history: "History Quest", // 完美补齐历史学科
 };
 
 interface QuizSessionState {
@@ -118,22 +120,11 @@ export default function QuizPage() {
 
   const initializeEngine = useCallback(
     async (questions: Question[]) => {
-      const user = USERS.find((u) => u.id === userId) || USERS[0];
       const level = userId === "pink" ? "A" : "B";
       const subjectQuestions = questions.filter((q) => q.subject === subject);
 
       if (subjectQuestions.length === 0) {
         return null;
-      }
-
-      // Fetch SmartScore for this subject to set initial difficulty
-      let initialDifficultyLevel = 5;
-      try {
-        const score = await getSmartScore(userId, subject);
-        // Map SmartScore (0-100) to difficulty level (1-10)
-        initialDifficultyLevel = Math.max(1, Math.min(10, Math.round(score / 10)));
-      } catch {
-        // Use default 5
       }
 
       return createAdaptiveEngine(subjectQuestions, level, subject);
@@ -152,35 +143,16 @@ export default function QuizPage() {
         return;
       }
 
-      // Shuffle questions for variety
+      // 洗牌打乱题目，确保每次进来顺序不一样、不重复
       for (let i = questions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [questions[i], questions[j]] = [questions[j], questions[i]];
       }
 
-      // Get current SmartScore to determine difficulty band
       let smartScore = 50;
       try {
         smartScore = await getSmartScore(userId, subject);
       } catch { /* use default */ }
-
-      // Filter to questions within a range of the current difficulty level
-      const targetDifficulty = Math.max(1, Math.min(10, Math.round(smartScore / 10)));
-      const difficultyBand = 3; // +/- 3 levels
-      questions = questions.filter(
-        (q) => q.difficultyLevel !== undefined
-          ? Math.abs(q.difficultyLevel - targetDifficulty) <= difficultyBand
-          : true
-      );
-
-      // Ensure we have questions
-      if (questions.length === 0) {
-        questions = await fetchQuestions(level, subject);
-        for (let i = questions.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [questions[i], questions[j]] = [questions[j], questions[i]];
-        }
-      }
 
       const newEngine = await initializeEngine(questions);
       if (!newEngine) {
@@ -198,7 +170,7 @@ export default function QuizPage() {
         questionIndex: 0,
         score: 0,
         streak: 0,
-        smartScore: initialDifficultyLevel * 10,
+        smartScore: smartScore || initialDifficultyLevel * 10,
         difficultyLevel: initialDifficultyLevel,
         isComplete: false,
         showFeedback: false,
@@ -206,7 +178,7 @@ export default function QuizPage() {
         selectedAnswer: null,
         correctCount: 0,
         totalAnswered: 0,
-        hint: null,
+        hint: firstQuestion?.question?.explanation || null, // 强制把题库里的解析注入到状态里
         streakBonus: false,
         addedToErrorBook: false,
       });
@@ -251,12 +223,9 @@ export default function QuizPage() {
       const result = engine.recordAnswer(question.id, isCorrect);
 
       const pointsEarned = isCorrect
-        ? Math.round(
-            question.points * (sessionState.difficultyLevel / 3)
-          )
+        ? Math.round(question.points * (sessionState.difficultyLevel / 3))
         : 0;
 
-      // Persist smartScore to Firestore
       updateSmartScore(userId, subject, result.newSmartScore).catch(
         console.error
       );
@@ -272,7 +241,7 @@ export default function QuizPage() {
         difficultyLevel: result.newDifficultyLevel,
         correctCount: isCorrect ? prev.correctCount + 1 : prev.correctCount,
         totalAnswered: prev.totalAnswered + 1,
-        hint: result.hint || null,
+        hint: question.explanation || result.hint || null, // 优先用我们新写的高质量题目解析
         streakBonus: result.streakBonus || false,
         addedToErrorBook: false,
       }));
@@ -317,7 +286,7 @@ export default function QuizPage() {
       showFeedback: false,
       lastAnswerCorrect: null,
       selectedAnswer: null,
-      hint: null,
+      hint: nextQuestion.question.explanation || null, // 切换下一题时同步更新下一题的解析
       streakBonus: false,
       addedToErrorBook: false,
     }));
@@ -351,7 +320,7 @@ export default function QuizPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div>Loading...</div>
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-indigo-500 border-t-transparent" />
       </div>
     );
   }
@@ -522,27 +491,31 @@ export default function QuizPage() {
           selectedAnswer={sessionState.selectedAnswer}
         />
 
-        {sessionState.showFeedback &&
-          !sessionState.lastAnswerCorrect &&
-          sessionState.hint && (
-            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-              <div className="flex items-start gap-3">
-                <BookOpen className="w-5 h-5 text-blue-500 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-blue-800">
-                    Hint for Next Time
+        {/* ====== 重点优化区域：只要答完题触发 showFeedback，不管对错，立刻精致地弹出解析卡片 ====== */}
+        {sessionState.showFeedback && sessionState.hint && (
+          <div className={`mt-4 p-5 rounded-2xl border transition-all duration-300 ${
+            sessionState.lastAnswerCorrect 
+              ? "bg-emerald-50/80 border-emerald-200/60" 
+              : "bg-indigo-50/80 border-indigo-200/60"
+          }`}>
+            <div className="flex items-start gap-3">
+              <BookOpen className={`w-5 h-5 mt-0.5 ${sessionState.lastAnswerCorrect ? "text-emerald-500" : "text-indigo-500"}`} />
+              <div>
+                <p className={`font-bold text-base ${sessionState.lastAnswerCorrect ? "text-emerald-800" : "text-indigo-800"}`}>
+                  {sessionState.lastAnswerCorrect ? "Excellent! Explanation" : "Learning Moment: Explanation"}
+                </p>
+                <p className={`text-sm mt-1 leading-relaxed ${sessionState.lastAnswerCorrect ? "text-emerald-700" : "text-indigo-700"}`}>
+                  {sessionState.hint}
+                </p>
+                {!sessionState.lastAnswerCorrect && (
+                  <p className="text-xs text-indigo-400 mt-3 font-medium">
+                    📍 This question has been safely added to your Error Book for weekend review.
                   </p>
-                  <p className="text-sm text-blue-600 mt-1">
-                    {sessionState.hint}
-                  </p>
-                  <p className="text-xs text-blue-500 mt-2">
-                    This question has been added to your Error Book for weekend
-                    review.
-                  </p>
-                </div>
+                )}
               </div>
             </div>
-          )}
+          </div>
+        )}
 
         {sessionState.showFeedback && (
           <div className="mt-8 text-center">
@@ -561,7 +534,6 @@ export default function QuizPage() {
   );
 }
 
-// Helper function to fetch error book count
 async function fetchErrorBookCount(userId: string): Promise<number> {
   const { fetchErrorBook } = await import("@/lib/dataService");
   const book = await fetchErrorBook(userId);
