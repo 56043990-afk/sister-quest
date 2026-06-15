@@ -1,5 +1,8 @@
 "use client";
 
+// ====== 融雪手术：强制页面动态化，彻底粉碎 Next.js 静态页面冻结和旧题缓存 ======
+export const dynamic = "force-dynamic";
+
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -34,7 +37,7 @@ const subjectEmojis: Record<string, string> = {
   physics: "⚡",
   chemistry: "🧪",
   logic: "🧠",
-  history: "🏛️", // 完美补齐历史学科
+  history: "🏛️",
 };
 
 const subjectNames: Record<string, string> = {
@@ -44,7 +47,7 @@ const subjectNames: Record<string, string> = {
   physics: "Physics",
   chemistry: "Chemistry",
   logic: "Computational Logic",
-  history: "History Quest", // 完美补齐历史学科
+  history: "History Quest",
 };
 
 interface QuizSessionState {
@@ -178,7 +181,7 @@ export default function QuizPage() {
         selectedAnswer: null,
         correctCount: 0,
         totalAnswered: 0,
-        hint: firstQuestion?.question?.explanation || null, // 强制把题库里的解析注入到状态里
+        hint: firstQuestion?.question?.explanation || null, // 强行把解析注入到 hint 字段中
         streakBonus: false,
         addedToErrorBook: false,
       });
@@ -241,7 +244,7 @@ export default function QuizPage() {
         difficultyLevel: result.newDifficultyLevel,
         correctCount: isCorrect ? prev.correctCount + 1 : prev.correctCount,
         totalAnswered: prev.totalAnswered + 1,
-        hint: question.explanation || result.hint || null, // 优先用我们新写的高质量题目解析
+        hint: question.explanation || result.hint || null, // 优先使用我们的精美题目解析
         streakBonus: result.streakBonus || false,
         addedToErrorBook: false,
       }));
@@ -286,7 +289,7 @@ export default function QuizPage() {
       showFeedback: false,
       lastAnswerCorrect: null,
       selectedAnswer: null,
-      hint: nextQuestion.question.explanation || null, // 切换下一题时同步更新下一题的解析
+      hint: nextQuestion.question.explanation || null, // 换题时同步更新解析
       streakBonus: false,
       addedToErrorBook: false,
     }));
@@ -491,7 +494,7 @@ export default function QuizPage() {
           selectedAnswer={sessionState.selectedAnswer}
         />
 
-        {/* ====== 重点优化区域：只要答完题触发 showFeedback，不管对错，立刻精致地弹出解析卡片 ====== */}
+        {/* 答完题一律精致地弹出解析卡片 */}
         {sessionState.showFeedback && sessionState.hint && (
           <div className={`mt-4 p-5 rounded-2xl border transition-all duration-300 ${
             sessionState.lastAnswerCorrect 
