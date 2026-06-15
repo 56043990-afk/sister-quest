@@ -1,6 +1,5 @@
 "use client";
 
-// ====== 融雪手术：强制页面动态化，彻底粉碎 Next.js 静态页面冻结和旧题缓存 ======
 export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
@@ -146,7 +145,10 @@ export default function QuizPage() {
         return;
       }
 
-      // 洗牌打乱题目，确保每次进来顺序不一样、不重复
+      // ====== 终极手术：彻底粉碎“难度窄区间过滤限制”！让该学科下的所有定制新题目全部释放！ ======
+      // 不再使用 targetDifficulty 和 difficultyBand 过滤，直接使用该学科的所有题目进行洗牌抽题
+      
+      // 全量随机洗牌，保证每次抽出的 5 道题绝不重复、顺序随机
       for (let i = questions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [questions[i], questions[j]] = [questions[j], questions[i]];
@@ -181,7 +183,7 @@ export default function QuizPage() {
         selectedAnswer: null,
         correctCount: 0,
         totalAnswered: 0,
-        hint: firstQuestion?.question?.explanation || null, // 强行把解析注入到 hint 字段中
+        hint: firstQuestion?.question?.explanation || null, 
         streakBonus: false,
         addedToErrorBook: false,
       });
@@ -244,7 +246,7 @@ export default function QuizPage() {
         difficultyLevel: result.newDifficultyLevel,
         correctCount: isCorrect ? prev.correctCount + 1 : prev.correctCount,
         totalAnswered: prev.totalAnswered + 1,
-        hint: question.explanation || result.hint || null, // 优先使用我们的精美题目解析
+        hint: question.explanation || result.hint || null, 
         streakBonus: result.streakBonus || false,
         addedToErrorBook: false,
       }));
@@ -289,7 +291,7 @@ export default function QuizPage() {
       showFeedback: false,
       lastAnswerCorrect: null,
       selectedAnswer: null,
-      hint: nextQuestion.question.explanation || null, // 换题时同步更新解析
+      hint: nextQuestion.question.explanation || null, 
       streakBonus: false,
       addedToErrorBook: false,
     }));
@@ -494,7 +496,6 @@ export default function QuizPage() {
           selectedAnswer={sessionState.selectedAnswer}
         />
 
-        {/* 答完题一律精致地弹出解析卡片 */}
         {sessionState.showFeedback && sessionState.hint && (
           <div className={`mt-4 p-5 rounded-2xl border transition-all duration-300 ${
             sessionState.lastAnswerCorrect 
