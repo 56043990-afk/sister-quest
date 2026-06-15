@@ -1,6 +1,7 @@
+import { mathQuestions } from "./mathQuestions";
 import { Question } from "@/types/quiz";
 
-export const questions: Question[] = [
+export const questions: Question[] = [...mathQuestions,
   // ============================================================================
   // ========== LEVEL A: PINK (13yo - Advanced Junior Cycle / STEAM) ==========
   // ============================================================================
